@@ -1,8 +1,8 @@
 === WP ShrtFly Integration ===
 Contributors: Vincenzo Luongo
 Tags: ShrtFly integration, ShrtFly dashboard, ShrtFly stats, ShrtFly script massive, ShrtFly, ShrtFly plugin
-Requires at least: 4.9
-Tested up to: 5.7
+Requires at least: 5.0
+Tested up to: 5.8
 Requires PHP: 7.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html

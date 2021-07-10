@@ -110,10 +110,11 @@ class WPShrtFlyDashboardIntegration {
                 }, explode(',', trim($value))), function($x) {
             return $x ? true : false;
         });
+
         if (count($arr)) {
             array_map(function($x) {
                 if (!$this->domainNameValidate($x)) {
-                    //add_settings_error('adfly_plugins_option_id', 'adfly_plugins_option_include_exclude_domains_value', $x . ' is not valid domain name.', 'error');
+                    /* NULL */
                 }
             }, $arr);
         } else {
