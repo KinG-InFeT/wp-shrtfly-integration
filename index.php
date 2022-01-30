@@ -3,13 +3,12 @@
  * Plugin Name: WP ShrtFly Integration
  * Plugin URI: https://wordpress-plugins.luongovincenzo.it/#wp-shrtfly-integration
  * Description: This plugin allows you to configure Full Page Scrip and widget for stats
- * Version: 1.0.0
+ * Version: 1.1.0
  * Author: Vincenzo Luongo
  * Author URI: https://www.luongovincenzo.it/
  * License: GPLv2 or later
  * Text Domain: wp-shrtfly-integration
  */
-
 if (!defined('ABSPATH')) {
     exit;
 }
@@ -68,7 +67,7 @@ class WPShrtFlyDashboardIntegration {
             $script .= 'app_exclude_domains = [';
         }
         if (trim($options['include_exclude_domains_value'])) {
-            $script .= implode(', ', array_map(function($x) {
+            $script .= implode(', ', array_map(function ($x) {
                         return json_encode(trim($x));
                     }, explode(',', trim($options['include_exclude_domains_value']))));
         }
@@ -105,14 +104,14 @@ class WPShrtFlyDashboardIntegration {
     }
 
     private function includeExcludeDomainsValueValidate($value) {
-        $arr = array_filter(array_map(function($x) {
+        $arr = array_filter(array_map(function ($x) {
                     return trim($x);
-                }, explode(',', trim($value))), function($x) {
-            return $x ? true : false;
-        });
+                }, explode(',', trim($value))), function ($x) {
+                    return $x ? true : false;
+                });
 
         if (count($arr)) {
-            array_map(function($x) {
+            array_map(function ($x) {
                 if (!$this->domainNameValidate($x)) {
                     /* NULL */
                 }
