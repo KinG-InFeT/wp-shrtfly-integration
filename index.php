@@ -3,7 +3,7 @@
  * Plugin Name: WP ShrtFly Integration
  * Plugin URI: https://wordpress-plugins.luongovincenzo.it/#wp-shrtfly-integration
  * Description: This plugin allows you to configure Full Page Scrip and widget for stats
- * Version: 1.1.0
+ * Version: 1.2.0
  * Author: Vincenzo Luongo
  * Author URI: https://www.luongovincenzo.it/
  * License: GPLv2 or later
