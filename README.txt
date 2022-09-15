@@ -40,6 +40,10 @@ Setup an free account and get your credential from [ShrtFly - Developer API](htt
 
 == Changelog ==
 
+= 1.3.0 =
+* Add option for load javascript lib with defer mode
+* Support for Wordpress 6.x added
+
 = 1.2.0 =
 * Support for Wordpress 5.9 added
 
