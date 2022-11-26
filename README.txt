@@ -2,7 +2,7 @@
 Contributors: Vincenzo Luongo
 Tags: ShrtFly integration, ShrtFly dashboard, ShrtFly stats, ShrtFly script massive, ShrtFly, ShrtFly plugin
 Requires at least: 5.0
-Tested up to: 6.5
+Tested up to: 6.1
 Requires PHP: 7.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -39,6 +39,10 @@ Setup an free account and get your credential from [ShrtFly - Developer API](htt
 1. Settings Page
 
 == Changelog ==
+
+= 1.4.0 =
+* Add support for new ShrtFly API v2 2022
+* Support for Wordpress 6.1 added
 
 = 1.3.0 =
 * Add option for load javascript lib with defer mode

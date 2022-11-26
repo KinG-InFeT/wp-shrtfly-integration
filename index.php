@@ -3,7 +3,7 @@
  * Plugin Name: WP ShrtFly Integration
  * Plugin URI: https://wordpress-plugins.luongovincenzo.it/#wp-shrtfly-integration
  * Description: This plugin allows you to configure Full Page Scrip and widget for stats
- * Version: 1.3.0
+ * Version: 1.4.0
  * Author: Vincenzo Luongo
  * Author URI: https://www.luongovincenzo.it/
  * License: GPLv2 or later
@@ -31,7 +31,7 @@ class WPShrtFlyDashboardIntegration {
         $this->pluginDetails = get_plugin_data(__FILE__);
         $this->pluginOptions = [
             'enabled' => get_option(SHRTFLY_INTEGRATION_PLUGIN_OPTIONS_PREFIX . '_enabled'),
-			'js_defer_enabled' => get_option(SHRTFLY_INTEGRATION_PLUGIN_OPTIONS_PREFIX . '_js_defer_enabled'),			
+            'js_defer_enabled' => get_option(SHRTFLY_INTEGRATION_PLUGIN_OPTIONS_PREFIX . '_js_defer_enabled'),
             'enabled_stats' => get_option(SHRTFLY_INTEGRATION_PLUGIN_OPTIONS_PREFIX . '_enabled_stats'),
             'enabled_amp' => get_option(SHRTFLY_INTEGRATION_PLUGIN_OPTIONS_PREFIX . '_enabled_amp'),
             'api_token' => trim(get_option(SHRTFLY_INTEGRATION_PLUGIN_OPTIONS_PREFIX . '_api_token')) ?: '-1',
@@ -80,20 +80,21 @@ class WPShrtFlyDashboardIntegration {
     public function gen_script() {
         if (get_option(SHRTFLY_INTEGRATION_PLUGIN_OPTIONS_PREFIX . '_enabled')) {
             $options = $this->pluginOptions;
-			
-			$loadJSDefer = '';
-			if (get_option(SHRTFLY_INTEGRATION_PLUGIN_OPTIONS_PREFIX . '_js_defer_enabled')) {
-				$loadJSDefer = 'defer';
-			}
 
-            print '<!--wp_shrtfly_integration-->
+            $loadJSDefer = '';
+            if (get_option(SHRTFLY_INTEGRATION_PLUGIN_OPTIONS_PREFIX . '_js_defer_enabled')) {
+                $loadJSDefer = 'defer';
+            }
+
+            //var app_advert = 2; 1 = Mainstream | 2 = Adult
+            print '<!-- [START]  wp_shrtfly_integration -->
                 <script type="text/javascript">
                     var app_url = "https://shrtfly.com/";
                     var app_api_token = ' . json_encode($options['api_token']) . ';
                     var app_advert = 2;
                     ' . $this->includeExcludeDomainScript($options) . '
                 </script>
-                <script '.$loadJSDefer.' src="//shrtfly.com/js/full-page-script.js"></script>
+                <script ' . $loadJSDefer . ' src="//shrtfly.com/js/full-page-script.js"></script>
                 <!-- [END] wp_shrtfly_integration -->';
         } else {
             return false;
@@ -131,7 +132,7 @@ class WPShrtFlyDashboardIntegration {
 
     public function _registerOptions() {
         register_setting(SHRTFLY_INTEGRATION_PLUGIN_SETTINGS_GROUP, SHRTFLY_INTEGRATION_PLUGIN_OPTIONS_PREFIX . '_enabled');
-		register_setting(SHRTFLY_INTEGRATION_PLUGIN_SETTINGS_GROUP, SHRTFLY_INTEGRATION_PLUGIN_OPTIONS_PREFIX . '_js_defer_enabled');		
+        register_setting(SHRTFLY_INTEGRATION_PLUGIN_SETTINGS_GROUP, SHRTFLY_INTEGRATION_PLUGIN_OPTIONS_PREFIX . '_js_defer_enabled');
         register_setting(SHRTFLY_INTEGRATION_PLUGIN_SETTINGS_GROUP, SHRTFLY_INTEGRATION_PLUGIN_OPTIONS_PREFIX . '_api_token');
         register_setting(SHRTFLY_INTEGRATION_PLUGIN_SETTINGS_GROUP, SHRTFLY_INTEGRATION_PLUGIN_OPTIONS_PREFIX . '_enabled_amp');
         register_setting(SHRTFLY_INTEGRATION_PLUGIN_SETTINGS_GROUP, SHRTFLY_INTEGRATION_PLUGIN_OPTIONS_PREFIX . '_domain');
@@ -163,8 +164,8 @@ class WPShrtFlyDashboardIntegration {
                             <td scope="row" class="left_shrtfly_bar">Integration Enabled</td>
                             <td><input type="checkbox" <?php echo get_option(SHRTFLY_INTEGRATION_PLUGIN_OPTIONS_PREFIX . '_enabled') ? 'checked="checked"' : '' ?> value="1" name="<?php print SHRTFLY_INTEGRATION_PLUGIN_OPTIONS_PREFIX; ?>_enabled" /></td>
                         </tr>
-						
-						 <tr valign="top">
+
+                        <tr valign="top">
                             <td scope="row" class="left_shrtfly_bar">Load Javascript Lib with Defer Mode</td>
                             <td><input type="checkbox" <?php echo get_option(SHRTFLY_INTEGRATION_PLUGIN_OPTIONS_PREFIX . '_js_defer_enabled') ? 'checked="checked"' : '' ?> value="1" name="<?php print SHRTFLY_INTEGRATION_PLUGIN_OPTIONS_PREFIX; ?>_js_defer_enabled" /></td>
                         </tr>
