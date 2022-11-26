@@ -40,6 +40,10 @@ Setup an free account and get your credential from [ShrtFly - Developer API](htt
 
 == Changelog ==
 
+= 1.5.0 =
+* Add support for different ads type (Mainstream or Adult)
+* Minor fix
+
 = 1.4.0 =
 * Add support for new ShrtFly API v2 2022
 * Support for Wordpress 6.1 added

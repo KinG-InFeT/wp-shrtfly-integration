@@ -3,7 +3,7 @@
  * Plugin Name: WP ShrtFly Integration
  * Plugin URI: https://wordpress-plugins.luongovincenzo.it/#wp-shrtfly-integration
  * Description: This plugin allows you to configure Full Page Script and widget for stats
- * Version: 1.4.0
+ * Version: 1.5.0
  * Author: Vincenzo Luongo
  * Author URI: https://www.luongovincenzo.it/
  * License: GPLv2 or later
@@ -37,6 +37,7 @@ class WPShrtFlyDashboardIntegration {
             'api_token' => trim(get_option(SHRTFLY_INTEGRATION_PLUGIN_OPTIONS_PREFIX . '_api_token')) ?: '-1',
             'include_exclude_domains_choose' => get_option(SHRTFLY_INTEGRATION_PLUGIN_OPTIONS_PREFIX . '_include_exclude_domains_choose') ?: 'exclude',
             'include_exclude_domains_value' => trim(get_option(SHRTFLY_INTEGRATION_PLUGIN_OPTIONS_PREFIX . '_include_exclude_domains_value')),
+            'ads_type' => get_option(SHRTFLY_INTEGRATION_PLUGIN_OPTIONS_PREFIX . '_ads_type') ?: 'mainstream',
         ];
 
         add_action('wp_head', [$this, 'gen_script']);
@@ -55,7 +56,7 @@ class WPShrtFlyDashboardIntegration {
     }
 
     public function add_plugin_actions($links) {
-        $links[] = '<a href="' . esc_url(get_admin_url(null, 'options-general.php?page=wp-shrtfly-integration%2Findex.php')) . '">Settings</a>';
+        $links[] = '<a href="' . esc_url(get_admin_url(null, 'options-general.php?page=shrtfly-integration%2Findex.php')) . '">Settings</a>';
         $links[] = '<a href="https://wordpress-plugins.luongovincenzo.it/#donate" target="_blank">Donate</a>';
         return $links;
     }
@@ -86,12 +87,20 @@ class WPShrtFlyDashboardIntegration {
                 $loadJSDefer = 'defer';
             }
 
+            $adsType = 1;
+
+            if ($options['ads_type'] == 'adult') {
+                $adsType = 2;
+            } else if ($options['ads_type'] == 'mainstream') {
+                $adsType = 1;
+            }
+
             //var app_advert = 2; 1 = Mainstream | 2 = Adult
             print '<!-- [START]  wp_shrtfly_integration -->
                 <script type="text/javascript">
                     var app_url = "https://shrtfly.com/";
                     var app_api_token = ' . json_encode($options['api_token']) . ';
-                    var app_advert = 2;
+                    var app_advert = ' . $adsType . ';
                     ' . $this->includeExcludeDomainScript($options) . '
                 </script>
                 <script ' . $loadJSDefer . ' src="//shrtfly.com/js/full-page-script.js"></script>
@@ -137,6 +146,7 @@ class WPShrtFlyDashboardIntegration {
         register_setting(SHRTFLY_INTEGRATION_PLUGIN_SETTINGS_GROUP, SHRTFLY_INTEGRATION_PLUGIN_OPTIONS_PREFIX . '_enabled_amp');
         register_setting(SHRTFLY_INTEGRATION_PLUGIN_SETTINGS_GROUP, SHRTFLY_INTEGRATION_PLUGIN_OPTIONS_PREFIX . '_domain');
         register_setting(SHRTFLY_INTEGRATION_PLUGIN_SETTINGS_GROUP, SHRTFLY_INTEGRATION_PLUGIN_OPTIONS_PREFIX . '_include_exclude_domains_choose');
+        register_setting(SHRTFLY_INTEGRATION_PLUGIN_SETTINGS_GROUP, SHRTFLY_INTEGRATION_PLUGIN_OPTIONS_PREFIX . '_ads_type');
         register_setting(SHRTFLY_INTEGRATION_PLUGIN_SETTINGS_GROUP, SHRTFLY_INTEGRATION_PLUGIN_OPTIONS_PREFIX . '_include_exclude_domains_value', [$this, 'includeExcludeDomainsValueValidate']);
     }
 
@@ -147,6 +157,7 @@ class WPShrtFlyDashboardIntegration {
             .left_shrtfly_bar {
                 width:200px;
             }
+            
             #domains_demo_list {
                 display: none;
                 width: 64%;
@@ -176,11 +187,27 @@ class WPShrtFlyDashboardIntegration {
                         </tr>
 
                         <tr valign="top">
+                            <td scope="row" class="left_shrtfly_bar">ADS Type</td>
+                            <td>
+                                <div>
+                                    <label>
+                                        <input type="radio" name="<?php print SHRTFLY_INTEGRATION_PLUGIN_OPTIONS_PREFIX; ?>_ads_type" value="mainstream" <?php echo!get_option(SHRTFLY_INTEGRATION_PLUGIN_OPTIONS_PREFIX . '_ads_type') || get_option(SHRTFLY_INTEGRATION_PLUGIN_OPTIONS_PREFIX . '_ads_type') == 'mainstream' ? 'checked="checked"' : '' ?> />
+                                        Mainstream
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="<?php print SHRTFLY_INTEGRATION_PLUGIN_OPTIONS_PREFIX; ?>_ads_type" value="adult" <?php echo get_option(SHRTFLY_INTEGRATION_PLUGIN_OPTIONS_PREFIX . '_ads_type') == 'adult' ? 'checked="checked"' : '' ?> />
+                                        Adult
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr valign="top">
                             <td scope="row" class="left_shrtfly_bar">API Token</td>
                             <td>
                                 <input type="text" name="<?php print SHRTFLY_INTEGRATION_PLUGIN_OPTIONS_PREFIX; ?>_api_token" value="<?php echo htmlspecialchars(get_option(SHRTFLY_INTEGRATION_PLUGIN_OPTIONS_PREFIX . '_api_token'), ENT_QUOTES) ?>" required />
                                 <p class="description">
-                                    Simply visit <a href="https://shrtfly.com/member/tools/api" target="_blank">Developer API</a> page.
+                                    Simply visit <a href="https://shrtfly.com/publisher/developer-api" target="_blank">Developer API</a> page.
                                     Read <strong>Your API Token</strong> string
                                 </p>
                             </td>
