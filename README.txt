@@ -1,10 +1,10 @@
 === WP ShrtFly Integration ===
 Contributors: Vincenzo Luongo
 Tags: ShrtFly integration, ShrtFly dashboard, ShrtFly stats, ShrtFly script massive, ShrtFly, ShrtFly plugin
-Requires at least: 5.0
-Tested up to: 6.3
-Requires PHP: 7.4
-Stable tag: 1.6.0
+Requires at least: 6.0
+Tested up to: 7.0
+Requires PHP: 8.0
+Stable tag: 2.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,14 +16,16 @@ WP ShrtFly Integration is a secure and optimized WordPress plugin that allows yo
 
 **Key Features:**
 
-* ✅ Secure integration with proper input sanitization
-* ⚡ Optimized performance with proper WordPress standards
-* 🎨 Modern admin interface with visual status indicators
-* 🔒 Enhanced security with capability checks and nonce verification
-* 📱 Full AMP support for mobile pages
-* 🌐 Domain include/exclude functionality
-* 🎯 Support for different ad types (Mainstream/Adult)
-* 🧹 Proper cleanup on plugin uninstall
+* Secure integration with proper input sanitization
+* Optimized performance with proper WordPress standards
+* Modern admin interface with visual status indicators
+* Enhanced security with capability checks and whitelist validation
+* Full AMP support for mobile pages
+* Domain include/exclude functionality
+* Support for different ad types (Mainstream/Adult)
+* Proper cleanup on plugin uninstall
+* WordPress 7.0 compatible
+* PHP 8.0+ with typed properties and return types
 
 == Installation ==
 
@@ -51,6 +53,30 @@ Setup an free account and get your credential from [ShrtFly - Developer API](htt
 1. Settings Page
 
 == Changelog ==
+
+= 2.0.0 =
+* BREAKING: Minimum PHP version raised to 8.0
+* COMPATIBILITY: Tested and compatible with WordPress 7.0
+* SECURITY: Added whitelist validation for ads_type and domain mode options
+* SECURITY: Escaped error message output in domain validation
+* SECURITY: Removed redundant nonce field (handled by Settings API)
+* FIX: Domain validation now supports wildcard patterns (*.example.com) as expected by ShrtFly script
+* FIX: Made constructor private to enforce singleton pattern correctly
+* FIX: Moved admin_init registration to constructor (was incorrectly nested in admin_menu)
+* FIX: Removed unused enabled_stats option
+* IMPROVEMENT: Replaced jQuery dependency with vanilla JavaScript
+* IMPROVEMENT: Added PHP 8.0 typed properties and return types
+* IMPROVEMENT: Moved inline CSS to wp_add_inline_style for proper asset loading
+* IMPROVEMENT: Cleaned up uninstall to remove only existing options
+* UI: Complete admin page redesign with modern card-based layout
+* UI: Added branded header with gradient, plugin version badge, and live status indicator
+* UI: Toggle switches replacing plain checkboxes for boolean settings
+* UI: Pill-style radio buttons for ADS type and domain mode selection
+* UI: Section cards with contextual color-coded icons (settings, API, domains)
+* UI: Inline API token status badge with dot indicator
+* UI: Improved input styling with focus states and consistent border-radius
+* UI: Added plugin page link in footer
+* UI: Fixed Plugin URI and removed broken donate link pointing to non-existent anchors
 
 = 1.6.0 =
 * SECURITY: Fixed critical file inclusion vulnerability
